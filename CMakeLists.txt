@@ -67,7 +67,16 @@ add_library(libass
   libass/c/c_rasterizer.c
   libass/c/rasterizer_template.h
 )
-
+if(WIN32)
+target_link_libraries(libass
+  PRIVATE
+  freetype::freetype
+  fribidi::fribidi
+  iconv::iconv
+  harfbuzz::harfbuzz
+  gdi32
+)
+else()
 target_link_libraries(libass
   PRIVATE
   freetype::freetype
@@ -75,6 +84,7 @@ target_link_libraries(libass
   iconv::iconv
   harfbuzz::harfbuzz
 )
+endif()
 target_compile_definitions(libass
   PRIVATE
     CONFIG_RASTERIZER
